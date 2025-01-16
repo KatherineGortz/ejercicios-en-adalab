@@ -1,0 +1,1 @@
+SELECT * FROM bbdd_empleadas_proyecto.empleadas_en_proyectos;

@@ -92,8 +92,7 @@ FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
 ON DELETE CASCADE;
 
 DELETE FROM clientes
-WHERE nombre = 'Lucía'
-ON DELETE CASCADE;
+WHERE nombre = 'Lucía';
 
 -- En la tabla géneros, queremos cambiar el nombre de la columna nombre_genero a genero. --
 
