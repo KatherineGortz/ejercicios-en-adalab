@@ -63,7 +63,6 @@ SELECT A.FirstName as EmployeeName, A.LastName as EmployeeLastName, A.City as Em
 FROM employees AS A, employees AS B
 WHERE A.ReportsTo = B.EmployeeID;
 
-
 -- In class practice with Rocio
 
 SELECT c.CompanyName AS empresa, COUNT(DISTINCT o.OrderID) as pedidos_totales
