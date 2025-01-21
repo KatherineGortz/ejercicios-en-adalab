@@ -42,17 +42,28 @@ HAVING COUNT(customer_name) = (
 
 -- 3. Por último, usa todas las consultas anteriores para seleccionar el customerNumber, nombre y apellido de las clientas asignadas a la ciudad con mayor numero de clientas.
 
-SELECT c.city, c.customer_number, contact_first_name, contact_last_name, COUNT(c.customer_name) AS Number
+SELECT c.city, c.customer_number, contact_first_name, contact_last_name
 FROM customers c
-GROUP BY c.city
-HAVING COUNT(c.customer_name) = (
-        SELECT MAX(Number)
-        FROM (
-            SELECT 
-                COUNT(customer_name) AS Number
-            FROM 
-                customers
-            GROUP BY 
-                city
-        ) AS max_counts
-    );
+WHERE city IN (
+        SELECT MAX(COUNT(customer_name))
+        FROM (SELECT COUNT(customer_name) AS Number
+            FROM customers
+            GROUP BY city) AS max_counts);
+            
+-- 4. Queremos ver ahora que empleados tienen algún contrato asignado con alguno de los clientes existentes. 
+-- Para ello selecciona employeeNumber como 'Número empleado', firstName como 'nombre Empleado' y lastName como 'Apellido Empleado'
+
+SELECT employee_number AS NumeroEmpleado, first_name as NombreEmpleado, last_name as ApellidoEmpleado
+FROM employees
+WHERE employee_number IN 
+	(SELECT sales_rep_employee_number 
+    FROM customers);
+    
+-- 5. Queremos ver ahora en cuantas ciudades en las cuales tenemos clientes, no también una oficina de nuestra empresa para ello: 
+-- Selecciona aquellas ciudades como 'ciudad' y los nombres de las empresas como 'nombre de la empresa ' de la tabla customers,
+ -- sin repeticiones, que no tengan una oficina en dicha ciudad de la tabla offices.
+ 
+ SELECT c.city AS ciudades, c.customer_name AS  NombredelaEmpresa
+ FROM customers c
+ WHERE c.city NOT IN (SELECT o.city FROM offices o);
+ 
